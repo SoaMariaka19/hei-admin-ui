@@ -21,6 +21,8 @@ const StudentCreate = props => {
   const defaultCanCreateFees = false
   const [canCreateFees, setCanCreateFees] = useState(defaultCanCreateFees)
   const transformPayload = payload => {
+    console.log(payload)
+    console.log(feesConf)
     const {
       monthly_amount,
       manual_first_duedate,
@@ -41,21 +43,35 @@ const StudentCreate = props => {
     if (canCreateFees) {
       const firstDueDate = is_predefined_first_dueDate ? predefinedFirstDueDates[predefined_first_dueDate].value : toDate(manual_first_duedate)
       let totalMonthsNumber = feesConf.reduce((acc, currentValue) => acc + currentValue.monthsNumber, 0)
-      for (let j = 0; j < feesConf.length; j++) {
-        let start = j === 0 ? 0 : totalMonthsNumber - (totalMonthsNumber - feesConf[j - 1].monthsNumber)
-        let end = start + feesConf[j].monthsNumber
-        for (let i = start; i < end; i++) {
+      console.log(payload)
+      console.log(feesConf)
+      if (feesConf.length <= 1) {
+        for (let i = 0; i < Number(months_number); i++) {
           fees.push({
-            total_amount: feesConf[j].monthlyAmount,
-            type: isPredefinedType ? predefinedFeeTypes[predefined_type][0].type : manualFeeTypes[manual_type].type,
+            total_amount: Number(monthly_amount),
+            type: isPredefinedType ? predefinedFeeTypes[predefined_type][0].type : manualFeeTypes[manual_type]?.type,
             due_datetime: new Date(firstDueDate.getFullYear(), firstDueDate.getMonth() + i, firstDueDate.getDate()).toISOString(),
             comment: `${comment} (${currentYear})`
           })
+        }
+      } else {
+        for (let j = 0; j < feesConf.length; j++) {
+          const start = j === 0 ? 0 : totalMonthsNumber - (totalMonthsNumber - feesConf[j - 1].monthsNumber)
+          const end = start + feesConf[j].monthsNumber
+          for (let i = start; i < end; i++) {
+            fees.push({
+              total_amount: feesConf[j].monthlyAmount,
+              type: isPredefinedType ? predefinedFeeTypes[predefined_type][0].type : manualFeeTypes[manual_type].type,
+              due_datetime: new Date(firstDueDate.getFullYear(), firstDueDate.getMonth() + i, firstDueDate.getDate()).toISOString(),
+              comment: `${comment} (${currentYear})`
+            })
+          }
         }
       }
     }
     student.entrance_datetime = student.entrance_datetime.concat('T10:00:00.000Z')
     const result = [fees, student]
+    console.log(result)
     return result
   }
   return (
