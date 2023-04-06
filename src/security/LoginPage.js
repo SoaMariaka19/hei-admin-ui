@@ -78,7 +78,7 @@ const HaLoginPage = () => {
           href='#/login'
           sx={
             displayFull
-              ? { color: '#FFFF', width: 'inherit', position: 'absolute', bottom: '30vh', display: 'flex', justifyContent: 'center' }
+              ? { color: '#FFFF', width: 'inherit', position: 'absolute', bottom: '25vh', display: 'flex', justifyContent: 'center' }
               : {
                   color: '#FFFF',
                   width: 'inherit',
