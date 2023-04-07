@@ -77,31 +77,14 @@ const HaLoginPage = () => {
     }
     return (
       <Grid container xs={12}>
-        <Grid
-          xs={displayFull ? 4 : 12}
-          sx={{
-            width: 'inherit',
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-          position={'absolute'}
-        >
+        <CommonGrid bottom={0}>
           <Login backgroundImage={null} style={{ backgroundImage: 'inherit', position: 'relative' }} />
-        </Grid>
-        <Grid
-          xs={displayFull ? 4 : 12}
-          sx={{
-            width: 'inherit',
-            bottom: 100,
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-          position={'absolute'}
-        >
+        </CommonGrid>
+        <CommonGrid bottom={100}>
           <Link href='#/login' color='#FFFF' onClick={() => setOpenModal(true)} align='center'>
             Mot de passe oublié?
           </Link>
-        </Grid>
+        </CommonGrid>
       </Grid>
     )
   }
