@@ -13,6 +13,7 @@ import frenchMessages from 'ra-language-french'
 import profile from './operations/profile'
 import students from './operations/students'
 import teachers from './operations/teachers'
+import courses from './operations/courses'
 
 import fees from './operations/fees'
 import payments from './operations/payments'
@@ -21,6 +22,7 @@ import studentGrades from './operations/studentGrades'
 
 import MyLayout from './HaLayout'
 import HaLoginPage from './security/LoginPage'
+import exams from './operations/exams'
 const FeeCreate = React.lazy(() => import('./operations/fees/FeesCreate'))
 const App = () => (
   <Admin
@@ -33,16 +35,22 @@ const App = () => (
     requireAuth
   >
     <Resource name='profile' />
+
+    <Resource name='courses' {...courses} />
+    <Resource name='student-grades' {...studentGrades} />
+    <Resource name='exams' {...exams} />
+
     <Resource name='students' {...students} />
     <Resource name='teachers' {...teachers} />
 
     <Resource name='fees' {...fees} />
     <Resource name='payments' {...payments} />
 
-    <Resource name='student-grades' {...studentGrades} />
-
     <CustomRoutes>
       <Route exact path='/profile' element={<profile.show />} />
+
+      <Route exact path='/courses/:courseId/exams' element={<exams.list />} />
+      <Route exact path='/courses/:courseId/exams/create' element={<exams.create />} />
 
       <Route exact path='/students/:studentId/fees' element={<fees.list />} />
       <Route
